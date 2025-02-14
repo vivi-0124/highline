@@ -10,10 +10,14 @@ import {
   MapPin, 
   Instagram, 
   Calendar, 
-  Award,
+  ChevronRight,
   Menu,
   X
 } from 'lucide-react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import Projects from './pages/Projects';
+import SoundEquipment from './pages/SoundEquipment';
+import LightingEquipment from './pages/LightingEquipment';
 
 function Section({ children, className = '', id = '' }: { children: React.ReactNode; className?: string; id?: string }) {
   const [ref, inView] = useInView({
@@ -50,7 +54,7 @@ function Navigation() {
       <nav className="hidden md:block fixed top-0 left-0 right-0 bg-gray-900/95 backdrop-blur-sm z-50">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-20">
-            <a href="#" className="text-2xl font-bold text-yellow-400">HIGHLINE</a>
+            <Link to="/" className="text-2xl font-bold text-yellow-400">HIGHLINE</Link>
             <div className="flex gap-8">
               {menuItems.map((item) => (
                 <a
@@ -70,7 +74,7 @@ function Navigation() {
       <nav className="md:hidden fixed top-0 left-0 right-0 bg-gray-900/95 backdrop-blur-sm z-50">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16">
-            <a href="#" className="text-xl font-bold text-yellow-400">HIGHLINE</a>
+            <Link to="/" className="text-xl font-bold text-yellow-400">HIGHLINE</Link>
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="text-gray-300 hover:text-yellow-400 transition-colors"
@@ -112,12 +116,9 @@ function Navigation() {
 }
 
 function InstagramFeed() {
-  // This is a placeholder UI for Instagram feed
-  const dummyPosts = Array(6).fill(null);
-
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-      {dummyPosts.map((_, index) => (
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      {Array(4).fill(null).map((_, index) => (
         <div
           key={index}
           className="aspect-square bg-gray-800 rounded-lg overflow-hidden relative group"
@@ -136,11 +137,9 @@ function InstagramFeed() {
   );
 }
 
-function App() {
+function Home() {
   return (
-    <div className="bg-gray-900 text-gray-100">
-      <Navigation />
-
+    <>
       {/* Hero Section */}
       <Section className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
         <div className="absolute inset-0">
@@ -208,7 +207,7 @@ function App() {
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">所有機材</h2>
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-gray-800 p-6 rounded-lg group">
+            <Link to="/sound-equipment" className="bg-gray-800 p-6 rounded-lg group">
               <div className="relative overflow-hidden rounded-lg mb-4">
                 <img
                   src="https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?auto=format&fit=crop&q=80"
@@ -222,16 +221,12 @@ function App() {
                   </div>
                 </div>
               </div>
-              <h3 className="text-2xl font-bold mb-2">音響システム</h3>
-              <ul className="list-disc list-inside space-y-2">
-                <li>ラインアレイスピーカー</li>
-                <li>デジタルミキサー</li>
-                <li>ワイヤレスマイクシステム</li>
-                <li>パワーアンプ</li>
-                <li>各種エフェクター</li>
-              </ul>
-            </div>
-            <div className="bg-gray-800 p-6 rounded-lg group">
+              <div className="flex items-center justify-between">
+                <h3 className="text-2xl font-bold">音響システム</h3>
+                <ChevronRight className="text-yellow-400" />
+              </div>
+            </Link>
+            <Link to="/lighting-equipment" className="bg-gray-800 p-6 rounded-lg group">
               <div className="relative overflow-hidden rounded-lg mb-4">
                 <img
                   src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&q=80"
@@ -245,15 +240,11 @@ function App() {
                   </div>
                 </div>
               </div>
-              <h3 className="text-2xl font-bold mb-2">照明システム</h3>
-              <ul className="list-disc list-inside space-y-2">
-                <li>ムービングライト</li>
-                <li>LEDパーライト</li>
-                <li>レーザー照明</li>
-                <li>ストロボ</li>
-                <li>DMXコントローラー</li>
-              </ul>
-            </div>
+              <div className="flex items-center justify-between">
+                <h3 className="text-2xl font-bold">照明システム</h3>
+                <ChevronRight className="text-yellow-400" />
+              </div>
+            </Link>
           </div>
         </div>
       </Section>
@@ -267,11 +258,7 @@ function App() {
               "photo-1533174072545-7a4b6ad7a6c3",
               "photo-1470229722913-7c0e2dbbafd3",
               "photo-1516450360452-9312f5e86fc7",
-              "photo-1429962714451-bb934ecdc4ec",
-              "photo-1493225457124-a3eb161ffa5f",
-              "photo-1506157786151-b8491531f063",
-              "photo-1501386761578-eac5c94b800a",
-              "photo-1574391884720-bbc3740c59d1"
+              "photo-1429962714451-bb934ecdc4ec"
             ].map((photoId, index) => (
               <div key={index} className="relative group aspect-square">
                 <img
@@ -287,6 +274,15 @@ function App() {
                 </div>
               </div>
             ))}
+          </div>
+          <div className="text-center mt-8">
+            <Link
+              to="/projects"
+              className="inline-flex items-center gap-2 text-yellow-400 hover:text-yellow-300 transition-colors"
+            >
+              全ての実績を見る
+              <ChevronRight className="w-5 h-5" />
+            </Link>
           </div>
         </div>
       </Section>
@@ -365,7 +361,23 @@ function App() {
           </div>
         </div>
       </Section>
-    </div>
+    </>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <div className="bg-gray-900 text-gray-100">
+        <Navigation />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/sound-equipment" element={<SoundEquipment />} />
+          <Route path="/lighting-equipment" element={<LightingEquipment />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
